@@ -1,0 +1,63 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files（永远不要提交真实密钥）
+.env
+.env.*
+!.env.example
+.env*.local
+*.local
+
+# vercel
+.vercel
+.vercel-token
+
+# typescript
+*.tsbuildinfo
+
+# test / coverage
+/coverage
+
+# editors
+/.idea
+/.vscode
+
+# local scratch & logs
+/.scratch
+*.log
+
+# 可选主题素材：因版权原因不随公开仓库分发，见 public/miku/README.md
+/public/miku/*.png
+/public/miku/*.jpg
+/public/miku/*.jpeg
+/public/miku/*.webp
+/public/miku/art/*.png
+/public/miku/art/*.jpg
+/public/miku/art/*.webp
+
+# 内部 UI 审计截图（含真实账号信息，不随公开仓库分发）
+/docs/ui-audit/
+
+# 发布用的本地草稿
+/RELEASE_NOTES.local.md

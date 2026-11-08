@@ -1,0 +1,15 @@
+# 这些文件不上传到 Vercel（部署时只传源码）
+.env
+.env.local
+.env*.local
+.next
+node_modules
+.git
+.vercel
+*.log
+tsconfig.tsbuildinfo
+.DS_Store
+Thumbs.db
+
+# 部署用的临时 token（不要提交）
+.vercel-token

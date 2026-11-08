@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "🔒 报告安全漏洞"
+    url: https://github.com/congcongrikka/info-keeper/security/advisories/new
+    about: 请勿公开提交安全漏洞，走私有报告渠道（见 SECURITY.md）
+  - name: "💬 讨论与提问"
+    url: https://github.com/congcongrikka/info-keeper/discussions
+    about: 使用问题、部署交流、想法讨论
+  - name: "📖 部署与贡献文档"
+    url: https://github.com/congcongrikka/info-keeper/blob/main/CONTRIBUTING.md
+    about: 先看这里再提 Issue，很多常见问题已经有答案

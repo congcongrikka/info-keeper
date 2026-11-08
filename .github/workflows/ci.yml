@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# 本仓库的 CI 只需要读代码，不给写权限。
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # 为什么用假值：
+      # - 本项目所有页面与 Route Handler 都声明了 force-dynamic，next build
+      #   不会在构建期预渲染，也不会连接 Supabase；
+      # - src/lib/env.ts 只做非空判断，占位值足以通过构建；
+      # - 因此 CI 不需要配置任何 GitHub Secret，也不应写入真实密钥。
+      #
+      # 如果将来把某个页面改成静态预渲染、导致 build 真的强依赖 Supabase：
+      # 请不要往这里塞真实密钥。把下面这个步骤改为 continue-on-error: true
+      # 或直接移除，并在 PR 模板 / README 里注明「build 需在本地或部署平台验证」。
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key

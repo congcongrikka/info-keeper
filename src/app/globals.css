@@ -1,0 +1,561 @@
+@import "tailwindcss";
+
+/* ============================================================
+   初音未来 Hatsune Miku · 虚拟空间主题
+   午夜深空 + 初音葱绿 + 霓虹粉 + 玻璃拟态 + 网格空间
+   ============================================================ */
+@theme {
+  /* ---------- 背景与面板 ---------- */
+  --color-night: #1e1e2e;
+  --color-night-2: #181826;
+  --color-panel: #2a2d42;
+  --color-panel-2: #343852;
+
+  /* ---------- 文字 ---------- */
+  --color-bright: #f6f8fc;
+  --color-muted: #b6bed2;
+  --color-faint: #7d859c;
+
+  /* ---------- 初音葱绿 ---------- */
+  --color-miku: #39c5bb;
+  --color-miku-2: #2aa39b;
+  --color-miku-3: #7fe3dc;
+
+  /* ---------- 霓虹粉 ---------- */
+  --color-sakura: #f472b6;
+  --color-sakura-2: #ec4899;
+
+  /* ---------- 蓝 / 紫 / 琥珀 ---------- */
+  --color-neon-blue: #60a5fa;
+  --color-violet: #8b5cf6;
+  --color-amber: #fbbf24;
+
+  /* ---------- 半透明边框 ---------- */
+  --color-edge: rgba(57, 197, 187, 0.28);
+  --color-edge-soft: rgba(148, 163, 184, 0.16);
+
+  /* ---------- 旧令牌别名（映射到新体系，避免遗漏处报错） ---------- */
+  --color-paper: #1e1e2e;
+  --color-paper-2: #2a2d42;
+  --color-surface: #2a2d42;
+  --color-surface-2: #343852;
+  --color-ink: #f6f8fc;
+  --color-ink-2: #b6bed2;
+  --color-ink-3: #7d859c;
+  --color-line: rgba(148, 163, 184, 0.18);
+  --color-line-2: rgba(148, 163, 184, 0.1);
+
+  --color-ember: #39c5bb;
+  --color-ember-2: #2aa39b;
+  --color-ember-soft: rgba(57, 197, 187, 0.14);
+  --color-moss: #4ade80;
+  --color-moss-soft: rgba(74, 222, 128, 0.14);
+  --color-ocean: #60a5fa;
+  --color-ocean-soft: rgba(96, 165, 250, 0.14);
+  --color-gold: #fbbf24;
+  --color-gold-soft: rgba(251, 191, 36, 0.14);
+  --color-plum: #8b5cf6;
+  --color-plum-soft: rgba(139, 92, 246, 0.14);
+
+  /* ---------- 字体 ---------- */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-serif:
+    "Iowan Old Style", "Palatino Linotype", "Songti SC", "Noto Serif SC", "Source Han Serif SC",
+    Georgia, serif;
+
+  /* ---------- 阴影 ---------- */
+  --shadow-card: 0 1px 2px rgba(8, 10, 20, 0.35), 0 14px 34px -18px rgba(8, 10, 20, 0.75);
+  --shadow-lift: 0 0 26px rgba(57, 197, 187, 0.22), 0 26px 52px -20px rgba(8, 10, 20, 0.8);
+  --shadow-neon: 0 0 15px rgba(57, 197, 187, 0.5);
+  --shadow-neon-pink: 0 0 15px rgba(244, 114, 182, 0.45);
+  --shadow-inset-line: inset 0 0 0 1px rgba(57, 197, 187, 0.18);
+
+  --radius-4xl: 1.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-night);
+    color: var(--color-bright);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- 全局动态背景：初音绿 + 深蓝/紫交织光斑 ---------- */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -10%;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(42rem 30rem at 12% 8%, rgba(57, 197, 187, 0.18), transparent 62%),
+      radial-gradient(38rem 32rem at 88% 10%, rgba(96, 165, 250, 0.16), transparent 60%),
+      radial-gradient(46rem 36rem at 78% 92%, rgba(139, 92, 246, 0.17), transparent 62%),
+      radial-gradient(30rem 24rem at 16% 88%, rgba(244, 114, 182, 0.1), transparent 60%);
+    animation: bg-drift 24s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  /* ---------- 虚拟空间网格 ---------- */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(57, 197, 187, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57, 197, 187, 0.07) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+    mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+  }
+
+  ::selection {
+    background: rgba(57, 197, 187, 0.32);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(57, 197, 187, 0.7);
+    outline-offset: 2px;
+  }
+
+  input,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+/* ============================================================
+   玻璃拟态 Glassmorphism
+   ============================================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(57, 197, 187, 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.glass-card {
+  background: rgba(42, 45, 66, 0.55);
+  border: 1px solid rgba(57, 197, 187, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-strong {
+  background: rgba(24, 24, 38, 0.72);
+  border: 1px solid rgba(57, 197, 187, 0.28);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ---------- 霓虹发光 Neon Glow ---------- */
+.neon {
+  box-shadow: 0 0 15px rgba(57, 197, 187, 0.5);
+}
+.neon-soft {
+  box-shadow: 0 0 10px rgba(57, 197, 187, 0.3);
+}
+.neon-pink {
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.45);
+}
+.neon-text {
+  text-shadow: 0 0 12px rgba(57, 197, 187, 0.65);
+}
+
+/* ---------- 卡片悬浮：上浮 + 更亮的发光边框 ---------- */
+.card-hover {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(57, 197, 187, 0.55);
+  box-shadow:
+    0 0 22px rgba(57, 197, 187, 0.3),
+    0 18px 40px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+   初音图片（miku-scene）
+   ------------------------------------------------------------
+   素材原图是「纯黑背景、无 alpha」的画。直接用 mix-blend-mode: screen
+   只在扁平深色底上成立 —— 一旦放进 .glass 卡片（背景更亮 + backdrop
+   blur），黑色矩形就会重新显形；而任何 mask 羽化都会连带切掉角色
+   伸出去的胳膊和头发。
+
+   所以改成**离线抠图**：scripts/build-miku-art.mjs 从画布四边做
+   flood fill，把「连通到边缘的黑色」判为背景并置为透明，输出
+   public/miku/art/*.webp（自带 alpha，体积只剩原来的 1/30）。
+   容器因此不再需要混合模式或遮罩，放在任何背景上都干净。
+   ============================================================ */
+.miku-scene {
+  position: relative;
+}
+
+.miku-scene .miku-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+}
+
+/* 原画在画布底边/左缘被硬切（裙摆、抬起的手臂），用窄渐变化开直边。
+   只给需要的人像图加，Q 版方图整幅完整，不加。 */
+.miku-scene.miku-fade .miku-art {
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 93%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 6%);
+  mask-image:
+    linear-gradient(to bottom, #000 93%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 6%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Q 版方图：整张居中 */
+.miku-scene.miku-center .miku-art {
+  object-position: center;
+}
+
+/* ============================================================
+   动画
+   ============================================================ */
+@keyframes bg-drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(2%, 2%, 0) scale(1.08);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes caret {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ---------- 大葱旋转 ---------- */
+@keyframes leek-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- 音符跳动 ---------- */
+@keyframes note-bounce {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-7px);
+  }
+}
+
+/* ---------- 缓慢漂浮（初音图片统一动效：-10px / 3s / ease-in-out / 无限） ---------- */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.animate-fade {
+  animation: fade 0.3s ease both;
+}
+.animate-caret {
+  animation: caret 1.1s steps(2, start) infinite;
+}
+.animate-leek {
+  animation: leek-spin 2.4s linear infinite;
+  transform-origin: center;
+}
+.animate-note {
+  animation: note-bounce 1s ease-in-out infinite;
+}
+.animate-float {
+  animation: float-y 3s ease-in-out infinite;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(57, 197, 187, 0.06) 25%,
+    rgba(57, 197, 187, 0.17) 37%,
+    rgba(57, 197, 187, 0.06) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.stagger > * {
+  animation: rise 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.stagger > *:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.08s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.11s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.14s;
+}
+.stagger > *:nth-child(6) {
+  animation-delay: 0.17s;
+}
+
+/* ============================================================
+   长文排版
+   ============================================================ */
+.prose-note {
+  color: var(--color-muted);
+  line-height: 1.85;
+  font-size: 0.9375rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.prose-note p + p {
+  margin-top: 0.85em;
+}
+
+/* ============================================================
+   滚动条
+   ============================================================ */
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(57, 197, 187, 0.35) transparent;
+}
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: rgba(57, 197, 187, 0.32);
+  border-radius: 999px;
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* 安全区（iPhone 刘海屏 / 底部 Home 条） */
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+}
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top), 0rem);
+}
+
+/* iOS Safari 聚焦自动放大：输入框字号 < 16px 时，点进去 iOS 会把整页放大，
+   而且这个放大是「页面级」的，收键盘也不会自动缩回，体验很难受。
+   本项目表单控件普遍是 13~14px（登录页、搜索框、标签框），在 iPhone 上一点就跳。
+
+   修法：窄屏下把所有表单控件的最小字号抬到 16px。
+   两个要点，改动时别破坏：
+   1) 这条规则必须留在所有 @layer 之外（文件末尾）。Tailwind 的 text-[14px] 在
+      @layer utilities 里，无层级样式天然压过任何 layer，所以不需要 !important；
+   2) 选择器带上 :not([data-keep-font])，给本来就用大字号、不该被压成 16px 的
+      控件开口子（如记录标题的 22px 输入框）。 */
+@media (max-width: 767px) {
+  :where(input, textarea, select):not([data-keep-font]) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   初音融合样式（追加于文件末尾，确保压过 Tailwind utilities）
+   ============================================================ */
+
+/* ---------- 光晕垫层：让初音「长在」界面上，而不是贴纸 ---------- */
+.miku-halo {
+  isolation: isolate;
+}
+.miku-halo::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 42%,
+    rgba(57, 197, 187, 0.22),
+    rgba(57, 197, 187, 0.07) 48%,
+    transparent 72%
+  );
+  filter: blur(10px);
+}
+.miku-halo .miku-art {
+  filter: drop-shadow(0 0 18px rgba(57, 197, 187, 0.28));
+}
+
+/* ---------- 边缘融化：radial-gradient mask 消除矩形感 ---------- */
+.miku-melt .miku-art {
+  -webkit-mask-image: radial-gradient(circle at 50% 46%, #000 42%, transparent 74%);
+  mask-image: radial-gradient(circle at 50% 46%, #000 42%, transparent 74%);
+}
+
+/* ---------- 角落水印：收件箱卡片右下，渐隐不压字 ---------- */
+.miku-watermark {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  width: 96px;
+  height: 96px;
+  opacity: 0.16;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to top left, #000 30%, transparent 78%);
+  mask-image: linear-gradient(to top left, #000 30%, transparent 78%);
+}
+.miku-watermark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- 头像：呼吸浮动 + 初音绿描边光晕 ---------- */
+.miku-avatar-ring {
+  border: 2px solid rgba(57, 197, 187, 0.6);
+  box-shadow:
+    0 0 10px rgba(57, 197, 187, 0.3),
+    0 0 22px rgba(57, 197, 187, 0.12);
+  animation: avatar-breathe 4s ease-in-out infinite;
+}
+.miku-avatar-ring img {
+  display: block;
+}
+
+@keyframes avatar-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow:
+      0 0 10px rgba(57, 197, 187, 0.3),
+      0 0 22px rgba(57, 197, 187, 0.12);
+  }
+  50% {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 14px rgba(57, 197, 187, 0.45),
+      0 0 28px rgba(57, 197, 187, 0.2);
+  }
+}
+
+/* ---------- 问答输入框聚焦：初音绿柔光边框 ---------- */
+.chat-input-shell:focus-within {
+  border-color: rgba(57, 197, 187, 0.65);
+  box-shadow:
+    0 0 0 1px rgba(57, 197, 187, 0.35),
+    0 0 18px rgba(57, 197, 187, 0.22),
+    0 0 42px rgba(57, 197, 187, 0.08);
+}
+
+/* ---------- SVG 点缀：隐藏音符，只在足够宽时露脸 ---------- */
+.miku-easter-egg {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  z-index: 0;
+  width: 14px;
+  height: 14px;
+  color: rgba(57, 197, 187, 0.18);
+  pointer-events: none;
+  display: none;
+}
+@media (min-width: 420px) {
+  .miku-easter-egg {
+    display: block;
+  }
+}

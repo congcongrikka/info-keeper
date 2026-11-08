@@ -1,0 +1,48 @@
+name: "✨ 功能建议"
+description: "提出一个想法或改进（安全相关问题请勿在此提交）"
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        欢迎提想法。为了让讨论更高效，请说清「它解决什么问题」。
+        本项目是**多用户、邀请制**的个人知识管家，任何改动都不能削弱用户间的数据隔离。
+  - type: textarea
+    id: problem
+    attributes:
+      label: 想解决的问题
+      description: 现在遇到的具体不便或场景是什么？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 你期望的做法
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 考虑过的其它方案
+  - type: dropdown
+    id: scope
+    attributes:
+      label: 影响范围
+      options:
+        - 仅前端展示
+        - 需要新增 / 修改 API
+        - 需要改数据库表或 RLS 策略
+        - 涉及密钥或第三方服务
+        - 不确定
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认
+      options:
+        - label: 我已搜索过已有 Issue 与 Discussions
+          required: true
+        - label: 这个改动不会削弱 RLS / 应用层 userId 双重隔离
+          required: true

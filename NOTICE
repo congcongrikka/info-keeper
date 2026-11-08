@@ -1,0 +1,44 @@
+# NOTICE
+
+Info Keeper is distributed under the MIT License (see `LICENSE`). This file
+records third-party materials and licenses that are **not** covered by that
+license.
+
+## 1. Theme artwork — not included in this repository
+
+The application can optionally display character-themed illustrations as part
+of its "Hatsune Miku" (初音未来) visual theme. Those illustrations are **not**
+shipped with this repository. This project does not distribute, host, mirror,
+or provide any download link for them.
+
+"Hatsune Miku" / "初音未来" and the related character designs are trademarks
+and copyrighted works of Crypton Future Media, Inc. Character materials made
+available through piapro are governed by the piapro Character License and its
+non-commercial terms. This project grants no rights to those materials, and
+the MIT License in `LICENSE` explicitly does **not** apply to them.
+
+If you choose to add such artwork yourself (see `public/miku/README.md`), you
+are solely responsible for confirming that you have the right to use and
+distribute it under the applicable terms, including any non-commercial
+restrictions. This repository contains no provenance or authorization record
+for any character artwork, and no claim of authorization is made here.
+
+When the artwork is absent, the interface renders a neutral built-in
+placeholder. All features work without it.
+
+## 2. Third-party software licenses
+
+Dependency licenses are recorded in `package-lock.json`; the full license text
+ships with each installed package. Notable cases:
+
+- `web-push` (runtime dependency) — **MPL-2.0**. Its source files remain under
+  MPL-2.0 and are not relicensed by this project's MIT license.
+- `lightningcss` and its platform binaries (build-time, via Tailwind CSS 4) —
+  **MPL-2.0**.
+- `sharp` / `libvips` platform binaries (build-time devDependency) —
+  **LGPL-3.0-or-later**, in some cases combined with Apache-2.0 / MIT. These
+  binaries are not redistributed in this repository.
+- `caniuse-lite` (transitive build-time data) — **CC-BY-4.0**.
+
+All other runtime dependencies use permissive licenses (MIT, Apache-2.0, ISC,
+BSD-3-Clause, MIT-0, 0BSD).
