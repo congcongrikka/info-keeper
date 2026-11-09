@@ -1,0 +1,56 @@
+name: Release
+
+# 触发方式：推送以 v 开头的 tag，例如
+#   git tag -a v1.8.0 -m "v1.8.0" && git push origin v1.8.0
+# 注意：push 普通分支不会触发本 workflow，CI 仍由 ci.yml 负责。
+on:
+  push:
+    tags:
+      - "v*"
+
+# 创建 Release 需要对仓库内容的写权限。
+# CI（ci.yml）仍是 contents: read，两者互不影响。
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # --generate-notes 需要完整历史来计算「上一个 tag 以来的变更」
+          fetch-depth: 0
+
+      - name: Create GitHub Release
+        env:
+          # GitHub Actions 自动注入，无需在仓库里配置任何 Secret
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          # 重复运行（例如手动重跑 workflow）时保持幂等
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG 已存在，跳过创建。"
+            exit 0
+          fi
+
+          # 如果这个版本写了手写说明就优先用：
+          #   docs/RELEASE_NOTES_v1.8.0.md
+          # 否则由 GitHub 根据两次 tag 之间的 PR / commit 自动生成变更列表。
+          NOTES="docs/RELEASE_NOTES_${TAG}.md"
+          if [ -f "$NOTES" ]; then
+            echo "使用手写 Release notes: $NOTES"
+            gh release create "$TAG" --title "$TAG" --notes-file "$NOTES"
+          else
+            echo "未找到 $NOTES，使用 GitHub 自动生成的 notes"
+            gh release create "$TAG" --title "$TAG" --generate-notes
+          fi
+
+# 备注：GitHub Actions 的 ubuntu-latest runner 预装了 gh CLI。
+# 若首次运行报 "Resource not accessible by integration"，
+# 到 Settings → Actions → General → Workflow permissions
+# 改成 Read and write permissions（或为本 workflow 单独授予 contents: write）。
